@@ -38,17 +38,19 @@ import { UserModule } from "./user/user.module";
     TranslationModule,
     ContributorsModule,
 
-    // Static Assets
-    ServeStaticModule.forRoot({
-      serveRoot: "/artboard",
-      // eslint-disable-next-line unicorn/prefer-module
-      rootPath: path.join(__dirname, "..", "artboard"),
-    }),
-    ServeStaticModule.forRoot({
-      renderPath: "/*",
-      // eslint-disable-next-line unicorn/prefer-module
-      rootPath: path.join(__dirname, "..", "client"),
-    }),
+    // Static Assets - only in production
+    ...(process.env.NODE_ENV === "production" ? [
+      ServeStaticModule.forRoot({
+        serveRoot: "/artboard",
+        // eslint-disable-next-line unicorn/prefer-module
+        rootPath: path.join(__dirname, "..", "artboard"),
+      }),
+      ServeStaticModule.forRoot({
+        renderPath: "/*",
+        // eslint-disable-next-line unicorn/prefer-module
+        rootPath: path.join(__dirname, "..", "client"),
+      }),
+    ] : []),
   ],
   providers: [
     {
