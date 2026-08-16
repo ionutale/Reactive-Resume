@@ -3,3 +3,5 @@ allowBuilds:
   esbuild: true
   msw: true
   sharp: true
+overrides:
+  dompurify: 3.4.13
