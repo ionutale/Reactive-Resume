@@ -26,7 +26,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: vp test
-      - run: vp check --fix
+      - run: pnpm exec vp test
+      - run: pnpm exec vp check --fix
 
       - uses: autofix-ci/action@7a166d7532b277f34e16238930461bf77f9d7ed8
