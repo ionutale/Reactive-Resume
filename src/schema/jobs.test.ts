@@ -52,29 +52,29 @@ describe("searchParamsSchema", () => {
   });
 
   it("rejects empty query", () => {
-    expect(() => searchParamsSchema.parse({ query: "" })).toThrow();
+    expect(() => searchParamsSchema.parse({ query: "" })).toThrow(/Invalid/);
   });
 
   it("rejects missing query", () => {
-    expect(() => searchParamsSchema.parse({})).toThrow();
+    expect(() => searchParamsSchema.parse({})).toThrow(/Invalid/);
   });
 
   it("rejects invalid date_posted value", () => {
-    expect(() => searchParamsSchema.parse({ query: "test", date_posted: "yesterday" })).toThrow();
+    expect(() => searchParamsSchema.parse({ query: "test", date_posted: "yesterday" })).toThrow(/Invalid/);
   });
 
   it("rejects invalid country values", () => {
-    expect(() => searchParamsSchema.parse({ query: "test", country: "usa" })).toThrow();
-    expect(() => searchParamsSchema.parse({ query: "test", country: "U" })).toThrow();
+    expect(() => searchParamsSchema.parse({ query: "test", country: "usa" })).toThrow(/Invalid/);
+    expect(() => searchParamsSchema.parse({ query: "test", country: "U" })).toThrow(/Invalid/);
   });
 
   it("rejects non-positive page numbers", () => {
-    expect(() => searchParamsSchema.parse({ query: "test", page: 0 })).toThrow();
-    expect(() => searchParamsSchema.parse({ query: "test", page: -1 })).toThrow();
+    expect(() => searchParamsSchema.parse({ query: "test", page: 0 })).toThrow(/Invalid/);
+    expect(() => searchParamsSchema.parse({ query: "test", page: -1 })).toThrow(/Invalid/);
   });
 
   it("rejects num_pages greater than allowed cap", () => {
-    expect(() => searchParamsSchema.parse({ query: "test", num_pages: 11 })).toThrow();
+    expect(() => searchParamsSchema.parse({ query: "test", num_pages: 11 })).toThrow(/Invalid/);
   });
 });
 
@@ -186,8 +186,8 @@ describe("jobResultSchema", () => {
   });
 
   it("rejects missing required fields", () => {
-    expect(() => jobResultSchema.parse({})).toThrow();
-    expect(() => jobResultSchema.parse({ job_id: "abc" })).toThrow();
+    expect(() => jobResultSchema.parse({})).toThrow(/Invalid/);
+    expect(() => jobResultSchema.parse({ job_id: "abc" })).toThrow(/Invalid/);
   });
 
   it("catches invalid optional fields gracefully", () => {
@@ -284,12 +284,12 @@ describe("postFilterOptionsSchema", () => {
   });
 
   it("rejects negative salary filters", () => {
-    expect(() => postFilterOptionsSchema.parse({ minSalary: -1 })).toThrow();
-    expect(() => postFilterOptionsSchema.parse({ maxSalary: -1 })).toThrow();
+    expect(() => postFilterOptionsSchema.parse({ minSalary: -1 })).toThrow(/Invalid/);
+    expect(() => postFilterOptionsSchema.parse({ maxSalary: -1 })).toThrow(/Invalid/);
   });
 
   it("rejects minSalary greater than maxSalary", () => {
-    expect(() => postFilterOptionsSchema.parse({ minSalary: 200000, maxSalary: 100000 })).toThrow();
+    expect(() => postFilterOptionsSchema.parse({ minSalary: 200000, maxSalary: 100000 })).toThrow(/Invalid/);
   });
 });
 
@@ -304,7 +304,7 @@ describe("rapidApiQuotaSchema", () => {
   });
 
   it("rejects missing fields", () => {
-    expect(() => rapidApiQuotaSchema.parse({ limit: 200 })).toThrow();
-    expect(() => rapidApiQuotaSchema.parse({})).toThrow();
+    expect(() => rapidApiQuotaSchema.parse({ limit: 200 })).toThrow(/Invalid/);
+    expect(() => rapidApiQuotaSchema.parse({})).toThrow(/Invalid/);
   });
 });
